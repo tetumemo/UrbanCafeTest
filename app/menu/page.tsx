@@ -55,37 +55,40 @@ export default function MenuPage() {
   const activeCategory = 'coffee';
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen">
       {/* Header */}
-      <div className="bg-stone-800 text-white py-16">
-        <div className="container mx-auto px-4">
-          <Link href="/" className="inline-flex items-center text-amber-400 hover:text-amber-300 mb-4">
-            <ArrowLeft className="w-5 h-5 mr-2" />
+      <div className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-amber-900 text-white py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <Link href="/" className="inline-flex items-center text-amber-400 hover:text-amber-300 mb-6 transition-all hover:gap-3 gap-2">
+            <ArrowLeft className="w-5 h-5" />
             Back to home
           </Link>
-          <h1 className="text-4xl md:text-5xl font-bold">Our Menu</h1>
-          <p className="text-stone-300 mt-4 max-w-2xl">
-            We take pride in sourcing the finest ingredients and crafting each item with care. 
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 animate-slide-up">
+            Our <span className="text-transparent bg-gradient-to-r from-amber-300 via-orange-400 to-amber-500 bg-clip-text">Menu</span>
+          </h1>
+          <p className="text-stone-200 text-lg mt-4 max-w-2xl animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            We take pride in sourcing the finest ingredients and crafting each item with care.
             Our menu changes seasonally to ensure freshness and quality.
           </p>
         </div>
       </div>
 
       {/* Category Navigation */}
-      <div className="sticky top-0 z-10 bg-white border-b border-stone-200 shadow-sm">
+      <div className="sticky top-0 z-10 glass shadow-lg">
         <div className="container mx-auto px-4">
-          <div className="flex overflow-x-auto py-4 space-x-6 no-scrollbar">
+          <div className="flex overflow-x-auto py-5 space-x-4 no-scrollbar">
             {categories.map(category => (
               <div
                 key={category.id}
-                className={`flex flex-col items-center px-4 py-2 rounded-lg whitespace-nowrap transition-colors ${
-                  activeCategory === category.id 
-                    ? 'bg-amber-100 text-amber-800' 
-                    : 'hover:bg-stone-100'
+                className={`flex flex-col items-center px-6 py-3 rounded-2xl whitespace-nowrap transition-all duration-300 cursor-pointer ${
+                  activeCategory === category.id
+                    ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg scale-105'
+                    : 'bg-white/50 hover:bg-white hover:shadow-md hover:scale-105'
                 }`}
               >
-                <span className="text-2xl mb-1">{category.icon}</span>
-                <span className={`font-medium ${activeCategory === category.id ? 'text-amber-800' : 'text-stone-700'}`}>
+                <span className="text-3xl mb-2">{category.icon}</span>
+                <span className={`font-semibold ${activeCategory === category.id ? 'text-white' : 'text-stone-700'}`}>
                   {category.name}
                 </span>
               </div>
@@ -95,39 +98,44 @@ export default function MenuPage() {
       </div>
 
       {/* Menu Items */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {menuItems[activeCategory]?.map((item, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-sm border border-stone-100 flex justify-between">
-              <div>
-                <div className="flex items-center">
-                  <h3 className="text-xl font-bold">{item.name}</h3>
-                  {item.popular && (
-                    <span className="ml-2 px-2 py-1 bg-amber-100 text-amber-800 text-xs rounded-full">
-                      Popular
-                    </span>
-                  )}
+            <div key={index} className="card-modern p-8 group">
+              <div className="flex justify-between items-start gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <h3 className="text-2xl font-bold group-hover:text-amber-600 transition-colors">{item.name}</h3>
+                    {item.popular && (
+                      <span className="px-3 py-1 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-xs font-semibold rounded-full shadow-md">
+                        Popular
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-stone-600 leading-relaxed">{item.description}</p>
                 </div>
-                <p className="text-stone-600 mt-2">{item.description}</p>
+                <span className="text-2xl font-bold gradient-text whitespace-nowrap">{item.price}</span>
               </div>
-              <span className="text-amber-600 font-bold">{item.price}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Call to action */}
-      <div className="bg-stone-100 py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Order?</h2>
-          <p className="text-stone-600 mb-8 max-w-2xl mx-auto">
+      <div className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Ready to <span className="gradient-text">Order?</span>
+          </h2>
+          <p className="text-stone-600 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
             Visit us in person or order ahead for pickup. We also cater for events and meetings.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-md transition-colors">
+          <div className="flex flex-col sm:flex-row justify-center gap-5">
+            <button className="btn-primary">
               Order Online
             </button>
-            <button className="bg-stone-700 hover:bg-stone-800 text-white px-6 py-3 rounded-md transition-colors">
+            <button className="btn-secondary">
               Book a Table
             </button>
           </div>
@@ -135,8 +143,9 @@ export default function MenuPage() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-stone-800 text-white py-8">
-        <div className="container mx-auto px-4 text-center">
+      <footer className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 text-white py-12 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
           <p className="text-stone-300">
             &copy; {new Date().getFullYear()} UrbanCafe. All rights reserved.
           </p>
